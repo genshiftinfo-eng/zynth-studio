@@ -63,8 +63,8 @@ export function MainLayout() {
     function handleHash() {
       const hash = window.location.hash;
       if (hash) {
-        // small delay so layout settles after boot
-        window.setTimeout(() => scrollToSection(hash), 800);
+        // wait one tick so layout settles & lenis is initialized
+        window.setTimeout(() => scrollToSection(hash), 120);
       }
     }
     handleHash();
