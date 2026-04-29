@@ -9,12 +9,13 @@ import { Process } from "./Process";
 import { Portfolio } from "./Portfolio";
 import { Contact } from "./Contact";
 import { Footer } from "./Footer";
-import { useLenis } from "@/hooks/useLenis";
+import { useLenis, scrollToSection } from "@/hooks/useLenis";
 
 function Boot() {
   const [progress, setProgress] = useState(0);
   const [done, setDone] = useState(() => {
     if (typeof window === "undefined") return false;
+    if (window.location.hash) return true;
     return window.sessionStorage.getItem("zynth_booted") === "1";
   });
 
@@ -58,6 +59,18 @@ function Boot() {
 
 export function MainLayout() {
   useLenis();
+  useEffect(() => {
+    function handleHash() {
+      const hash = window.location.hash;
+      if (hash) {
+        // small delay so layout settles after boot
+        window.setTimeout(() => scrollToSection(hash), 800);
+      }
+    }
+    handleHash();
+    window.addEventListener("hashchange", handleHash);
+    return () => window.removeEventListener("hashchange", handleHash);
+  }, []);
   return (
     <div className="relative bg-black text-white grain min-h-screen" data-testid="main-layout">
       <Cursor />
