@@ -24,4 +24,13 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
+## Artifacts
+
+- **artifacts/zynth** — "ZYNTH" single-page React+Vite digital agency presentation site.
+  Pure black/white aesthetic. Stack: React 19, Vite, Tailwind v4, three.js, @react-three/fiber v9,
+  @react-three/drei v10, gsap, lenis. Custom GLSL shaders in `src/components/Portfolio.tsx`.
+  All `<Canvas>` instances are wrapped in `CanvasFallback` (`src/components/SafeCanvas.tsx`)
+  which proactively detects WebGL support and renders pure-CSS/SVG fallbacks for environments
+  without GPU access (such as the headless screenshot service).
+
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.

@@ -1,0 +1,112 @@
+Here is the unified, master Product Requirements Document. It combines the rigorous business structure of your original document with the uncompromising creative and technical specifications needed to win "Site of the Century." 
+
+I have also integrated the real-world marker and eraser mechanics into the contact form while ensuring it perfectly fits the ultra-futuristic, bespoke black-and-white aesthetic.
+
+---
+
+# Product Requirements Document: ZYNTH Digital Agency Website
+
+## 1. Introduction
+### 1.1 Purpose
+This Product Requirements Document (PRD) outlines the vision, scope, and functional requirements for the ZYNTH digital agency website. The goal is to create an ultra high-end, award-winning online presence that showcases ZYNTH's expertise in web development, digital marketing, and graphic design through a unique, immersive, and visually stunning black-and-white aesthetic with advanced 3D animations and futuristic typography.
+
+### 1.2 Scope
+The ZYNTH website will serve as a primary touchpoint for potential clients, demonstrating the agency's capabilities and design philosophy. It will feature interactive 3D elements, premium momentum-based scrolling, and a distinctive visual style to establish ZYNTH as an absolute leader in the high-end digital solutions market.
+
+### 1.3 Target Audience
+Ultra high-net-worth individuals, enterprise decision-makers, and luxury brands seeking bespoke, cutting-edge digital solutions.
+
+---
+
+## 2. Vision & Goals
+### 2.1 Vision Statement
+To establish ZYNTH as the unparalleled leader in ultra high-end digital agency services, globally recognized for its innovative use of immersive 3D web experiences, avant-garde computational design, and zero-compromise engineering. 
+
+### 2.2 Business Goals
+* **Attract and Convert:** Capture high-value clients seeking premium, bespoke digital services.
+* **Brand Authority:** Enhance brand perception as an innovative, brutalist, and technologically superior agency.
+* **Industry Domination:** Achieve "Site of the Month" and "Site of the Century" on Awwwards, FWA, and CSS Design Awards.
+
+---
+
+## 3. User Stories
+* **As a potential client,** I want to experience a visually stunning, flawless 3D environment immediately upon loading so that I recognize ZYNTH's elite capabilities.
+* **As a potential client,** I want to intuitively navigate their service offerings (web dev, digital marketing, graphic design) through spatial 3D storytelling rather than static text blocks.
+* **As a potential client,** I want to see case studies presented as interactive, high-fidelity 3D models so that I can visualize their quality.
+* **As a potential client,** I want the act of contacting the agency to feel like a premium, tactile experience rather than filling out a generic web form.
+
+---
+
+## 4. Core Experiences & Page Specifications
+
+### 4.1 The Monolith (Home / Hero)
+* **Visual:** A massive, monolithic 3D rendering of the word "ZYNTH" suspended in a pure black void.
+* **Interaction:** The text distorts, refracting like liquid metal or dark glass based on cursor movement and device gyroscope. 
+* **Transition:** The first scroll shatter-morphs the typography into abstract particles, pulling the camera down the Z-axis into the agency's realm.
+
+### 4.2 The Arsenal (Services)
+Represented as three distinct topological zones in a continuous WebGL canvas:
+1.  **Web Development:** Visualized by a complex, constantly assembling 3D wireframe and brutalist architecture.
+2.  **Graphic Designing:** Visualized by morphing, high-tension cloth simulations and typography bending around invisible spheres.
+3.  **Digital Marketing:** Visualized by aggressive, rapid-fire kinetic data streams and geometric nodes connecting in real-time.
+
+### 4.3 The Proof (Portfolio)
+* **Interaction:** A 3D spatial carousel. Projects are presented as floating, monolithic slabs of monochrome material.
+* **Hover Effect:** Hovering over a slab triggers depth-map displacement shaders, making flat 2D images pull apart into 3D layers.
+
+### 4.4 The Tactile Form (Contact)
+The contact experience must transcend standard HTML. It will simulate a highly satisfying, physical interaction while strictly maintaining the futuristic B&W aesthetic.
+* **The Setup:** The camera pans down to an ultra-realistic 3D rendering of high-gsm textured matte paper on a sleek, light-absorbing black desk.
+* **The "Marker" Interaction:** When the user types, a 3D fluid simulation renders thick, glossy black ink bleeding slightly into the paper fibers in real-time. It mimics a bold, premium marker.
+* **The "Eraser" Interaction:** Standard backspacing is replaced by a physical mechanic. Deleting text summons a sleek, brutalist geometric block (the "eraser") that physically sweeps over the text. It uses a custom dispersion shader to smear and lift the ink off the paper organically.
+* **The Submission:** Clicking submit physically folds the paper into a sharp geometric shape (e.g., an origami-like plane or dart) which flies off-screen, followed by a haptic ripple effect.
+
+---
+
+## 5. Design System & Aesthetic
+### 5.1 The "Anti-AI" Mandate
+Zero generic generative aesthetics. No Midjourney-style glossy renders. All visual complexity must be derived from raw math, custom 3D modeling, procedural noise, and bespoke WebGL shaders. 
+
+### 5.2 Color & Light
+* **Primary Palette:** Pure Black (`#000000`) and Pure White (`#FFFFFF`).
+* **Depth:** All greys and gradients are generated entirely by real-time 3D lighting, shadows, and raymarching, rather than flat CSS colors.
+
+### 5.3 Typography
+* **Selection:** Big, bold, premium licensed fonts only (e.g., Monument Extended, Neue Montreal, bespoke variable fonts). 
+* **Behavior:** Typography acts as 3D geometry. It is kinetic, reacting to scroll momentum and spatial camera panning. 
+
+---
+
+## 6. Technical Stack & Architecture
+
+| Component | Technology / Framework | Purpose & Justification |
+| :--- | :--- | :--- |
+| **Frontend Shell** | Next.js (React) | Robust routing, SEO, and lightning-fast initial payload delivery. |
+| **3D Engine** | Three.js + React Three Fiber | Core rendering engine for all 3D geometry and environments. |
+| **Shaders** | Custom GLSL | Liquid metal, glass refraction, physical ink bleeding, and eraser dispersion effects. |
+| **Animations** | GSAP + ScrollTrigger | Master timeline control for syncing 3D camera moves with the scrollbar. |
+| **Scrolling** | Lenis (Virtual Scroll) | Physics-based, momentum-driven scrolling to eliminate browser jitter. |
+| **Asset Pipeline** | DRACO & KTX2 / Basis | Ultra-compression for 3D models and textures to ensure zero-latency loading. |
+| **Backend / CMS** | Sanity.io + Node.js | Headless content management and secure form data processing. |
+| **Hosting** | Vercel / AWS Edge | Global CDN delivery to ensure sub-second global load times. |
+
+---
+
+## 7. Non-Functional Requirements
+### 7.1 Performance & Quality Assurance
+* **Frame Rate:** A locked 60 FPS (120 FPS on ProMotion displays) is mandatory. Frame drops during WebGL transitions are considered critical bugs.
+* **Load Time:** Initial payload < 1.5MB. Time to Interactive (TTI) < 1.8 seconds.
+* **Hardware Scaling:** Dynamic GPU detection. High-end devices receive real-time raymarching; lower-end mobile devices receive baked lighting to preserve the 60fps target.
+
+### 7.2 Security
+* Strict SSL/TLS encryption.
+* Sanitization of all inputs on the 3D contact form to prevent injection attacks (OWASP Top 10 compliance).
+
+### 7.3 Accessibility
+* A visually hidden, perfectly structured HTML DOM must exist beneath the WebGL canvas to ensure flawless screen-reader compatibility (WCAG 2.1 AA) and perfect technical SEO, despite the heavy visual complexity.
+
+---
+
+## 8. Future Considerations
+* **Spatial Computing Integration:** Ensuring the Three.js environment is architected so it can be seamlessly ported to WebXR for Apple Vision Pro and Meta Quest experiences.
+* **Multi-language Support:** Dynamic font loading strategies to handle kinetic 3D typography in multiple character sets (e.g., Japanese, Arabic) without breaking the WebGL geometry.
