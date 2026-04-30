@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "pnpm --filter @workspace/zynth run build && mkdir -p public && cp -r artifacts/zynth/dist/public/. public/",
-  "outputDirectory": "public",
+  "buildCommand": "pnpm --filter @workspace/zynth run build",
+  "outputDirectory": "artifacts/zynth/dist",
   "installCommand": "pnpm install --ignore-scripts",
   "framework": null,
   "rewrites": [
