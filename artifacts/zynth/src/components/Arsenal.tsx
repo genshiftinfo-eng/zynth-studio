@@ -2,6 +2,7 @@ import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { CanvasFallback, StaticTopologyFallback } from "./SafeCanvas";
+import { useInView } from "../hooks/useInView";
 
 type Service = {
   index: string;
@@ -216,12 +217,15 @@ function StreamScene() {
 }
 
 function ServiceScene({ kind }: { kind: Service["scene"] }) {
+  const [wrapRef, inView] = useInView<HTMLDivElement>("250px");
   return (
+    <div ref={wrapRef} className="absolute inset-0">
     <CanvasFallback fallback={<StaticTopologyFallback kind={kind} />}>
       <Canvas
-        dpr={[1, 1.5]}
+        dpr={[1, 1.25]}
+        frameloop={inView ? "always" : "never"}
         camera={{ position: [0, 0, 6.5], fov: 36 }}
-        gl={{ antialias: true, alpha: false, failIfMajorPerformanceCaveat: false }}
+        gl={{ antialias: true, alpha: false, failIfMajorPerformanceCaveat: false, powerPreference: "high-performance" }}
         style={{ background: "#000" }}
       >
         <color attach="background" args={["#000000"]} />
@@ -235,6 +239,7 @@ function ServiceScene({ kind }: { kind: Service["scene"] }) {
         </Suspense>
       </Canvas>
     </CanvasFallback>
+    </div>
   );
 }
 

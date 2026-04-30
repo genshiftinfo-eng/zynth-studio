@@ -2,6 +2,7 @@ import { Suspense, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import { CanvasFallback, StaticPortfolioFallback } from "./SafeCanvas";
+import { useInView } from "../hooks/useInView";
 
 type Project = {
   client: string;
@@ -244,7 +245,7 @@ function Slab({
           onClick();
         }}
       >
-        <planeGeometry args={[2.6, 3.4, 96, 128]} />
+        <planeGeometry args={[2.6, 3.4, 32, 42]} />
         <shaderMaterial
           ref={mat}
           vertexShader={slabVertex}
@@ -314,6 +315,7 @@ function PortfolioScene({
 export function Portfolio() {
   const [active, setActive] = useState(0);
   const project = projects[active];
+  const [stageRef, inView] = useInView<HTMLDivElement>("300px");
 
   return (
     <section
@@ -337,12 +339,13 @@ export function Portfolio() {
         </div>
       </div>
 
-      <div className="relative h-[60svh] md:h-[68svh] w-full" data-cursor="Drag">
+      <div ref={stageRef} className="relative h-[60svh] md:h-[68svh] w-full" data-cursor="Drag">
         <CanvasFallback fallback={<StaticPortfolioFallback />}>
           <Canvas
-            dpr={[1, 1.5]}
+            dpr={[1, 1.25]}
+            frameloop={inView ? "always" : "never"}
             camera={{ position: [0, 0, 6.2], fov: 36 }}
-            gl={{ antialias: true, alpha: false, failIfMajorPerformanceCaveat: false }}
+            gl={{ antialias: true, alpha: false, failIfMajorPerformanceCaveat: false, powerPreference: "high-performance" }}
           >
             <Suspense fallback={null}>
               <PortfolioScene active={active} setActive={setActive} />

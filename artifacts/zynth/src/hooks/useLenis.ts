@@ -6,11 +6,12 @@ export function useLenis() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      wheelMultiplier: 1,
-      touchMultiplier: 1.4,
+      // lerp gives a snappier, lighter feel than long durations
+      lerp: 0.12,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.6,
       smoothWheel: true,
+      syncTouch: false,
     });
     lenisRef.current = lenis;
 

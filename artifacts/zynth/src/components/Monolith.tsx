@@ -4,6 +4,7 @@ import { Center, Environment, MeshTransmissionMaterial, Text3D } from "@react-th
 import * as THREE from "three";
 import { scrollToSection } from "@/hooks/useLenis";
 import { CanvasFallback, StaticHeroFallback } from "./SafeCanvas";
+import { useInView } from "../hooks/useInView";
 
 function MonolithText() {
   const groupRef = useRef<THREE.Group | null>(null);
@@ -108,8 +109,10 @@ function FloatingShards() {
 }
 
 export function Monolith() {
+  const [sectionRef, inView] = useInView<HTMLElement>("400px");
   return (
     <section
+      ref={sectionRef}
       id="monolith"
       className="relative h-[100svh] w-full overflow-hidden bg-black"
       data-testid="section-monolith"
@@ -151,9 +154,10 @@ export function Monolith() {
       {/* The 3D canvas */}
       <CanvasFallback fallback={<StaticHeroFallback />}>
         <Canvas
-          dpr={[1, 1.6]}
+          dpr={[1, 1.4]}
+          frameloop={inView ? "always" : "never"}
           camera={{ position: [0, 0, 7.5], fov: 38 }}
-          gl={{ antialias: true, alpha: false, failIfMajorPerformanceCaveat: false }}
+          gl={{ antialias: true, alpha: false, failIfMajorPerformanceCaveat: false, powerPreference: "high-performance" }}
           style={{ background: "#000" }}
           onCreated={({ gl }) => {
             gl.setClearColor("#000000", 1);
