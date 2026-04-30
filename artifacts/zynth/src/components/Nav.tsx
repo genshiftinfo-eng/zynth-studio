@@ -9,7 +9,7 @@ const links = [
   { id: "contact", label: "Contact" },
 ];
 
-export function Nav() {
+export function Nav({ onPartnerOpen }: { onPartnerOpen: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [time, setTime] = useState("");
 
@@ -23,8 +23,14 @@ export function Nav() {
   useEffect(() => {
     function update() {
       const d = new Date();
-      const utc = d.toISOString().slice(11, 19);
-      setTime(`${utc} UTC`);
+      const pkTime = d.toLocaleTimeString("en-PK", {
+        timeZone: "Asia/Karachi",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+      setTime(`${pkTime} PKT`);
     }
     update();
     const id = window.setInterval(update, 1000);
@@ -71,6 +77,14 @@ export function Nav() {
             {time}
           </div>
           <button
+            onClick={onPartnerOpen}
+            data-cursor="Partner"
+            className="group relative inline-flex items-center gap-3 border border-white/30 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-white hover-elevate"
+          >
+            <span className="h-1.5 w-1.5 bg-white/60" />
+            Become a Partner
+          </button>
+          <button
             onClick={() => scrollToSection("#contact")}
             data-cursor="Engage"
             className="group relative inline-flex items-center gap-3 border border-white/30 px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-white hover-elevate"
@@ -81,13 +95,21 @@ export function Nav() {
           </button>
         </div>
 
-        <button
-          onClick={() => scrollToSection("#contact")}
-          data-cursor="Engage"
-          className="md:hidden border border-white/30 px-3 py-2 text-[10px] uppercase tracking-[0.28em] text-white"
-        >
-          Brief
-        </button>
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            onClick={onPartnerOpen}
+            className="border border-white/30 px-3 py-2 text-[9px] uppercase tracking-[0.22em] text-white"
+          >
+            Partner
+          </button>
+          <button
+            onClick={() => scrollToSection("#contact")}
+            data-cursor="Engage"
+            className="border border-white/30 px-3 py-2 text-[9px] uppercase tracking-[0.22em] text-white"
+          >
+            Brief
+          </button>
+        </div>
       </div>
     </header>
   );

@@ -1,5 +1,8 @@
+import { useLocation } from "wouter";
+
 export function Footer() {
   const year = new Date().getFullYear();
+  const [, navigate] = useLocation();
   return (
     <footer className="relative bg-black border-t border-white/10" data-testid="section-footer">
       <div className="px-6 md:px-10 py-10 md:py-16">
@@ -9,7 +12,7 @@ export function Footer() {
               ZYNTH
             </div>
             <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.32em] text-white/55">
-              A studio for the obsessed · Est. MMXXII · San Francisco / Tokyo
+              A studio for the obsessed · Est. 2026 · Islamabad, Pakistan
             </div>
           </div>
           <div className="md:col-span-2">
@@ -36,8 +39,8 @@ export function Footer() {
             <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">Counsel</div>
             <ul className="mt-3 space-y-1 text-white/85">
               <li><a href="#" className="ink-stroke text-[14px]">Engagement</a></li>
-              <li><a href="#" className="ink-stroke text-[14px]">Privacy</a></li>
-              <li><a href="#" className="ink-stroke text-[14px]">Colophon</a></li>
+              <li><button onClick={() => navigate("/privacy-policy")} className="ink-stroke text-[14px]">Privacy Policy</button></li>
+              <li><button onClick={() => navigate("/terms-and-conditions")} className="ink-stroke text-[14px]">Terms & Conditions</button></li>
             </ul>
           </div>
         </div>
@@ -47,7 +50,7 @@ export function Footer() {
             © {year} ZYNTH Studio · All artifacts hand-engineered
           </div>
           <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/55">
-            v1.0.0 · Built for 60fps · 1.6s TTI · Made in WebGL
+            v1.0.0 · Built for Excellence · 1.6s TTI · Made by ZYNTH Studio
           </div>
         </div>
       </div>

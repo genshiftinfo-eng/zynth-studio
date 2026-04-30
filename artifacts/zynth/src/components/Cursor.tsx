@@ -111,7 +111,7 @@ export function Cursor() {
       {/* Default ring — hidden while in writing mode */}
       <div
         ref={ringRef}
-        className="pointer-events-none fixed left-0 top-0 z-[200] mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] mix-blend-difference"
         style={{
           width: hovering ? 88 : 28,
           height: hovering ? 88 : 28,
@@ -132,7 +132,7 @@ export function Cursor() {
       {/* Pen — visible only while writing */}
       <div
         ref={penRef}
-        className="pointer-events-none fixed left-0 top-0 z-[202]"
+        className="pointer-events-none fixed left-0 top-0 z-[9999]"
         style={{
           transformOrigin: "0 0",
           opacity: writing ? 1 : 0,
@@ -147,7 +147,7 @@ export function Cursor() {
       {/* Tiny dot at exact cursor — hidden in writing mode (tip replaces it) */}
       <div
         ref={dotRef}
-        className="pointer-events-none fixed left-0 top-0 z-[201] mix-blend-difference"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] mix-blend-difference"
         style={{
           width: 6,
           height: 6,

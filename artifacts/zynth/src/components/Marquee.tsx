@@ -1,12 +1,12 @@
 const phrases = [
-  "Bespoke",
-  "Brutalist",
-  "Avant-Garde",
-  "Site of the Century",
+  "WebGL-Powered Experiences",
+  "High-Impact Marketing Portfolios",
+  "Bespoke User Journeys",
+  "Surgical Code Execution",
   "Zero compromise",
-  "Computational",
-  "Hand-engineered",
-  "Made for the obsessed",
+  "Digital Growth Engines",
+  "Strategic Brand Systems",
+  "Custom GSAP Motion Systems",
 ];
 
 export function Marquee() {

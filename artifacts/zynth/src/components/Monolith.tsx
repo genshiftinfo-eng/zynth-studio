@@ -10,6 +10,7 @@ import { useInView } from "../hooks/useInView";
  * White glyph on black so the shader can displace luminance directly.
  */
 function makeLogoTexture(): THREE.CanvasTexture {
+  if (typeof document === "undefined") return new THREE.CanvasTexture(document.createElement("canvas"));
   const dpr = Math.min(2, typeof window !== "undefined" ? window.devicePixelRatio : 1);
   const W = 2048;
   const H = 512;
@@ -23,17 +24,17 @@ function makeLogoTexture(): THREE.CanvasTexture {
   ctx.fillStyle = "#ffffff";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  // Use the same display font stack as the rest of the site
-  ctx.font = "900 380px 'Helvetica Neue', 'Inter', Arial, sans-serif";
+  // Increased font size and used Monument Extended for high-impact "highlight"
+  ctx.font = "900 480px 'Monument Extended', 'Helvetica Neue', sans-serif";
   // Manual letter spacing because canvas2d's letterSpacing has spotty support
   const text = "ZYNTH";
-  const tracking = -22;
+  const tracking = -35;
   // measure with manual tracking
   const widths = text.split("").map((ch) => ctx.measureText(ch).width);
   const totalWidth = widths.reduce((a, b) => a + b, 0) + tracking * (text.length - 1);
   let x = (W - totalWidth) / 2;
   for (let i = 0; i < text.length; i++) {
-    ctx.fillText(text[i], x + widths[i] / 2, H / 2 + 8);
+    ctx.fillText(text[i], x + widths[i] / 2, H / 2 + 12);
     x += widths[i] + tracking;
   }
   const tex = new THREE.CanvasTexture(c);
@@ -263,7 +264,7 @@ export function Monolith() {
       <div className="pointer-events-none absolute inset-0 z-20">
         <div className="absolute left-6 top-24 md:left-10 md:top-28 font-mono text-[10px] tracking-[0.32em] uppercase text-white/55">
           <div>N° 001 / Monolith</div>
-          <div className="mt-1 text-white/35">Lat 37.7749 · Lon −122.4194</div>
+          <div className="mt-1 text-white/35">Lat 33.6844 · Lon 73.0479</div>
         </div>
         <div className="absolute right-6 top-24 md:right-10 md:top-28 text-right font-mono text-[10px] tracking-[0.32em] uppercase text-white/55">
           <div>Bespoke · Avant-garde</div>
@@ -277,6 +278,7 @@ export function Monolith() {
             <h2 className="mt-3 font-display text-[14px] md:text-[18px] leading-[1.25] text-white/85 max-w-[44ch]">
               We build digital monoliths — websites, brand systems, and growth engines
               forged from raw geometry and obsessive engineering.
+              Crafting high-performance digital experiences through obsessive engineering and avant-garde design.
             </h2>
           </div>
           <button
