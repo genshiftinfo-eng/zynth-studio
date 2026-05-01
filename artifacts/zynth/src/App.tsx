@@ -144,17 +144,13 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Cursor />
+        <SocialDock />
+        <NavDock />
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <Router />
+        </WouterRouter>
+        <Toaster />
         {!booted && <Boot onDone={() => setBooted(true)} />}
-        {booted && (
-          <>
-            <SocialDock />
-            <NavDock />
-            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <Router />
-            </WouterRouter>
-            <Toaster />
-          </>
-        )}
       </TooltipProvider>
     </QueryClientProvider>
   );
