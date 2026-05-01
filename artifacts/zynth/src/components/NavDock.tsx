@@ -35,6 +35,7 @@ export function NavDock() {
   if (modalOpen) return null;
 
   const total = navItems.length - 1;
+  const oy = TOGGLE_H / 2;
 
   function handleNav(href: string, i: number) {
     setActive(i);
