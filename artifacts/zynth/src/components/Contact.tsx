@@ -81,6 +81,7 @@ export function Contact() {
       ref={ref}
       id="contact"
       className={`relative overflow-hidden border-t border-white/10 bg-black py-24 md:py-32 reveal ${revealed ? "is-revealed" : ""}`}
+      style={{ opacity: revealed ? undefined : undefined }}
       data-testid="section-contact"
     >
       <style>{`

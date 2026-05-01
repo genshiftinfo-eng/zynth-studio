@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaInstagram, FaYoutube, FaTiktok, FaXTwitter, FaFacebook } from "react-icons/fa6";
 
 const socials = [
@@ -18,6 +18,17 @@ const TOGGLE_H = 52;
 export function SocialDock() {
   const [open, setOpen] = useState(false);
   const [spinning, setSpinning] = useState<number | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    const obs = new MutationObserver(() => {
+      setModalOpen(document.body.hasAttribute("data-modal"));
+    });
+    obs.observe(document.body, { attributes: true, attributeFilter: ["data-modal"] });
+    return () => obs.disconnect();
+  }, []);
+
+  if (modalOpen) return null;
 
   // Origin = center of toggle button
   const ox = TOGGLE_W / 2;

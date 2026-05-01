@@ -3,7 +3,7 @@ const phrases = [
   "High-Impact Marketing Portfolios",
   "Bespoke User Journeys",
   "Surgical Code Execution",
-  "Zero compromise",
+  "Zero Compromise",
   "Digital Growth Engines",
   "Strategic Brand Systems",
   "Custom GSAP Motion Systems",
@@ -15,8 +15,12 @@ export function Marquee() {
     <section
       className="relative border-y border-white/10 bg-black py-6 overflow-hidden"
       data-testid="section-marquee"
+      aria-label="Studio capabilities"
     >
-      <div className="marquee-track flex w-max items-center gap-12 whitespace-nowrap">
+      <div
+        className="marquee-track flex w-max items-center gap-12 whitespace-nowrap"
+        aria-hidden="true"
+      >
         {items.map((p, i) => (
           <span
             key={i}

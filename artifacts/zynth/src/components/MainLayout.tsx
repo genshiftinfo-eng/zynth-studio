@@ -2,7 +2,6 @@ import { useEffect, useState, lazy, Suspense } from "react";
 import { Nav } from "./Nav";
 import { Monolith } from "./Monolith";
 import { Marquee } from "./Marquee";
-import { SocialDock } from "./SocialDock";
 import { PartnerModal } from "./PartnerModal";
 import { useLenis, scrollToSection } from "@/hooks/useLenis";
 
@@ -150,7 +149,6 @@ export function MainLayout() {
         <Suspense fallback={<SectionFallback />}><Contact /></Suspense>
       </main>
       <Suspense fallback={null}><Footer /></Suspense>
-      <SocialDock />
       <PartnerModal open={partnerOpen} onClose={() => setPartnerOpen(false)} />
       <Boot />
 

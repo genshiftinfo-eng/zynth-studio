@@ -45,13 +45,16 @@ export function PartnerModal({ open, onClose }: { open: boolean; onClose: () => 
     const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
     if (open) {
       document.body.style.overflow = "hidden";
+      document.body.setAttribute("data-modal", "open");
       lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-modal");
       lenis?.start();
     }
     return () => {
       document.body.style.overflow = "";
+      document.body.removeAttribute("data-modal");
       lenis?.start();
     };
   }, [open]);
@@ -129,7 +132,7 @@ export function PartnerModal({ open, onClose }: { open: boolean; onClose: () => 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[500] flex items-start sm:items-center justify-center" style={{ cursor: "none" }}>
+    <div className="fixed inset-0 z-[9500] flex items-start sm:items-center justify-center" style={{ cursor: "none" }}>
       <style>{`
         @keyframes partner-fade { from { opacity: 0; } to { opacity: 1; } }
         @keyframes partner-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }

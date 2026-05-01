@@ -8,6 +8,7 @@ import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsAndConditions from "@/pages/terms-and-conditions";
 import { MainLayout } from "./components/MainLayout";
 import { Cursor } from "./components/Cursor";
+import { SocialDock } from "./components/SocialDock";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Cursor />
+        <SocialDock />
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Router />
         </WouterRouter>

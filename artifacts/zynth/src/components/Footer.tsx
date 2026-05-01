@@ -12,15 +12,22 @@ export function Footer() {
               ZYNTH
             </div>
             <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.32em] text-white/55">
-              A studio for the obsessed · Est. 2026 · Islamabad, Pakistan
+              A studio for the obsessed · Est. {new Date().getFullYear()} · Islamabad, Pakistan
             </div>
           </div>
           <div className="md:col-span-2">
             <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">Index</div>
             <ul className="mt-3 space-y-1 text-white/85">
-              {["Monolith", "Arsenal", "Doctrine", "Proof", "Contact"].map((l) => (
-                <li key={l}>
-                  <a href={`#${l.toLowerCase()}`} className="ink-stroke text-[14px]">{l}</a>
+              {[
+                { label: "Index", id: "monolith" },
+                { label: "Arsenal", id: "arsenal" },
+                { label: "Doctrine", id: "manifesto" },
+                { label: "Method", id: "process" },
+                { label: "Capabilities", id: "proof" },
+                { label: "Contact", id: "contact" },
+              ].map((l) => (
+                <li key={l.id}>
+                  <a href={`/#${l.id}`} className="ink-stroke text-[14px]">{l.label}</a>
                 </li>
               ))}
             </ul>
@@ -50,7 +57,7 @@ export function Footer() {
             © {year} ZYNTH Studio · All artifacts hand-engineered
           </div>
           <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/55">
-            v1.0.0 · Built for Excellence · 1.6s TTI · Made by ZYNTH Studio
+            v1.0.0 · Hand-engineered · Made by ZYNTH Studio
           </div>
         </div>
       </div>
