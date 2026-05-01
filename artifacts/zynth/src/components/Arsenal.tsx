@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { CanvasFallback, StaticTopologyFallback } from "./SafeCanvas";
 import { useInView } from "../hooks/useInView";
+import { useReveal } from "@/hooks/useReveal";
 
 type Service = {
   index: string;
@@ -251,6 +252,7 @@ function ServiceScene({ kind }: { kind: Service["scene"] }) {
 }
 
 export function Arsenal() {
+  const [headRef, headRevealed] = useReveal<HTMLDivElement>();
   return (
     <section
       id="arsenal"
@@ -258,7 +260,10 @@ export function Arsenal() {
       data-testid="section-arsenal"
     >
       <div className="px-6 md:px-10">
-        <div className="mb-16 md:mb-24 grid grid-cols-1 md:grid-cols-12 gap-8">
+        <div
+          ref={headRef}
+          className={`mb-16 md:mb-24 grid grid-cols-1 md:grid-cols-12 gap-8 reveal ${headRevealed ? "is-revealed" : ""}`}
+        >
           <div className="md:col-span-4 font-mono text-[10px] tracking-[0.32em] uppercase text-white/55">
             <div>N° 002 / Arsenal</div>
             <div className="mt-2 text-white/35">— Three disciplines, one studio</div>

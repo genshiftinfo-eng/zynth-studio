@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useReveal } from "@/hooks/useReveal";
 
 type FormState = {
   name: string;
@@ -17,6 +18,7 @@ const initialForm: FormState = {
 };
 
 export function Contact() {
+  const [ref, revealed] = useReveal<HTMLElement>();
   const [form, setForm] = useState<FormState>(initialForm);
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -76,8 +78,9 @@ export function Contact() {
 
   return (
     <section
+      ref={ref}
       id="contact"
-      className="relative overflow-hidden border-t border-white/10 bg-black py-24 md:py-32"
+      className={`relative overflow-hidden border-t border-white/10 bg-black py-24 md:py-32 reveal ${revealed ? "is-revealed" : ""}`}
       data-testid="section-contact"
     >
       <style>{`

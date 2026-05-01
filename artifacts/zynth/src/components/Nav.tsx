@@ -5,7 +5,8 @@ const links = [
   { id: "monolith", label: "Index" },
   { id: "arsenal", label: "Arsenal" },
   { id: "manifesto", label: "Doctrine" },
-  { id: "proof", label: "Proof" },
+  { id: "process", label: "Method" },
+  { id: "proof", label: "Capabilities" },
   { id: "contact", label: "Contact" },
 ];
 

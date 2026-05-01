@@ -1,0 +1,1 @@
+import{r as t}from"./vendor-react-BcqiGTI5.js";function i(r=.15){const n=t.useRef(null),[o,s]=t.useState(!1);return t.useEffect(()=>{const c=n.current;if(!c)return;if(typeof IntersectionObserver>"u"){s(!0);return}const e=new IntersectionObserver(([u])=>{u.isIntersecting&&(s(!0),e.disconnect())},{threshold:r});return e.observe(c),()=>e.disconnect()},[r]),[n,o]}export{i as u};
