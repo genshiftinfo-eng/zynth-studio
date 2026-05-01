@@ -1,6 +1,6 @@
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
@@ -12,6 +12,96 @@ import { SocialDock } from "./components/SocialDock";
 import { NavDock } from "./components/NavDock";
 
 const queryClient = new QueryClient();
+
+const greetings = [
+  { text: "Hello",            font: "'Archivo', sans-serif",               dir: "ltr" },
+  { text: "Nǐ hǎo",          font: "'Noto Sans SC', sans-serif",           dir: "ltr" },
+  { text: "Namaste",          font: "'Noto Sans Devanagari', sans-serif",   dir: "ltr" },
+  { text: "Bonjour",          font: "'Archivo', sans-serif",               dir: "ltr" },
+  { text: "Hola",             font: "'Archivo', sans-serif",               dir: "ltr" },
+  { text: "السلام عليكم",    font: "'Noto Naskh Arabic', serif",           dir: "rtl" },
+  { text: "নমস্কার",         font: "'Noto Sans Bengali', sans-serif",      dir: "ltr" },
+  { text: "Olá",              font: "'Archivo', sans-serif",               dir: "ltr" },
+  { text: "Здравствуйте",    font: "'Noto Sans', sans-serif",              dir: "ltr" },
+  { text: "Halo",             font: "'Archivo', sans-serif",               dir: "ltr" },
+  { text: "こんにちは",       font: "'Noto Sans JP', sans-serif",           dir: "ltr" },
+  { text: "أهلاً",           font: "'Noto Naskh Arabic', serif",           dir: "rtl" },
+];
+
+function Boot({ onDone }: { onDone: () => void }) {
+  const [phase, setPhase] = useState<"greet" | "boot" | "done">("greet");
+  const [greetIdx, setGreetIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (phase !== "greet") return;
+    if (greetIdx >= greetings.length) { setPhase("boot"); return; }
+    setVisible(true);
+    const t1 = setTimeout(() => setVisible(false), 280);
+    const t2 = setTimeout(() => setGreetIdx(i => i + 1), 400);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [phase, greetIdx]);
+
+  useEffect(() => {
+    if (phase !== "boot") return;
+    let v = 0;
+    const id = setInterval(() => {
+      v = Math.min(100, v + Math.random() * 18 + 14);
+      setProgress(Math.floor(v));
+      if (v >= 100) {
+        clearInterval(id);
+        setTimeout(() => { setPhase("done"); onDone(); }, 320);
+      }
+    }, 80);
+    return () => clearInterval(id);
+  }, [phase, onDone]);
+
+  if (phase === "done") return null;
+
+  const g = greetings[greetIdx] ?? greetings[greetings.length - 1];
+
+  return (
+    <div
+      style={{ position: "fixed", inset: 0, zIndex: 99999, background: "#000", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
+      {phase === "greet" && (
+        <div
+          key={greetIdx}
+          style={{
+            fontFamily: g.font,
+            direction: g.dir as "ltr" | "rtl",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(-14px)",
+            transition: "opacity 0.12s ease, transform 0.12s ease",
+            textAlign: "center",
+            width: "100%",
+            padding: "0 24px",
+          }}
+        >
+          <div style={{ fontSize: "clamp(40px, 10vw, 88px)", fontWeight: 700, lineHeight: 1 }}>
+            {g.text}
+          </div>
+        </div>
+      )}
+
+      {phase === "boot" && (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
+          <div style={{ fontSize: "clamp(72px, 15vw, 180px)", fontWeight: 900, letterSpacing: "-0.05em", lineHeight: 1, animation: "fadeIn .3s ease both", fontFamily: "'Archivo', sans-serif" }}>
+            ZYNTH
+          </div>
+          <div style={{ marginTop: 24, width: "min(420px, 80vw)", height: 1, background: "rgba(255,255,255,0.15)", animation: "fadeIn .3s ease both" }}>
+            <div style={{ height: 1, background: "#fff", width: `${progress}%`, transition: "width .25s linear" }} />
+          </div>
+          <div style={{ marginTop: 12, fontFamily: "monospace", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", animation: "fadeIn .3s ease both" }}>
+            Compiling shaders · {String(progress).padStart(3, "0")}%
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Router() {
   const [location] = useLocation();
@@ -48,16 +138,23 @@ function Router() {
 }
 
 function App() {
+  const [booted, setBooted] = useState(false);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Cursor />
-        <SocialDock />
-        <NavDock />
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        {!booted && <Boot onDone={() => setBooted(true)} />}
+        {booted && (
+          <>
+            <SocialDock />
+            <NavDock />
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </>
+        )}
       </TooltipProvider>
     </QueryClientProvider>
   );
