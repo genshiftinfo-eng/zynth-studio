@@ -62,7 +62,7 @@ export default function PrivacyPolicy() {
   }, []);
 
   return (
-    <div className="relative bg-black text-white min-h-screen grain">
+    <div className="relative bg-black text-white min-h-screen grain" lang="en">
       {/* nav bar */}
       <div className="sticky top-0 z-[150] border-b border-white/10 bg-black/80 backdrop-blur-sm px-6 md:px-10 py-5 flex items-center justify-between">
         <button

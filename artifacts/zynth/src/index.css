@@ -158,6 +158,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
   ::selection { background: #fff; color: #000; }
+  :focus-visible {
+    outline: 1px solid rgba(255,255,255,0.6);
+    outline-offset: 3px;
+  }
 }
 
 /* Hide scrollbar visually but keep it functional */

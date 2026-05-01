@@ -151,7 +151,7 @@ export default function TermsAndConditions() {
   }, []);
 
   return (
-    <div className="relative bg-black text-white min-h-screen grain">
+    <div className="relative bg-black text-white min-h-screen grain" lang="en">
       <div className="sticky top-0 z-[150] border-b border-white/10 bg-black/80 backdrop-blur-sm px-6 md:px-10 py-5 flex items-center justify-between">
         <button onClick={() => navigate("/")} className="font-display text-[20px] font-black tracking-[-0.04em] leading-none">
           ZYNTH

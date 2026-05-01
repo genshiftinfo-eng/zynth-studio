@@ -32,7 +32,7 @@ export class CanvasFallback extends React.Component<
 
   componentDidCatch(error: unknown) {
     if (typeof window !== "undefined") {
-      console.warn("[Zynth] WebGL unavailable, rendering fallback.", error);
+      console.warn("[Zynth] WebGL unavailable, rendering fallback.");
     }
   }
 

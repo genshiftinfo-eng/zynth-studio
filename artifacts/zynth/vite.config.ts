@@ -38,15 +38,25 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "..", "..", "dist"),
     emptyOutDir: true,
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "wouter"],
+          "vendor-three": ["three", "@react-three/fiber", "@react-three/drei"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-icons": ["react-icons"],
+          "vendor-query": ["@tanstack/react-query"],
+        },
+      },
+    },
   },
   server: {
     port,
     strictPort: true,
     host: "0.0.0.0",
     allowedHosts: true,
-    fs: {
-      strict: true,
-    },
+    fs: { strict: true },
   },
   preview: {
     port,

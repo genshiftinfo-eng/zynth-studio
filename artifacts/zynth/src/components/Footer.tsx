@@ -7,8 +7,8 @@ export function Footer() {
     <footer className="relative bg-black border-t border-white/10" data-testid="section-footer">
       <div className="px-6 md:px-10 py-10 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          <div className="md:col-span-6">
-            <div className="font-display text-[88px] md:text-[180px] font-black leading-[0.85] tracking-[-0.05em]">
+          <div className="md:col-span-6 overflow-hidden">
+            <div className="font-display text-[60px] sm:text-[88px] md:text-[180px] font-black leading-[0.85] tracking-[-0.05em] truncate">
               ZYNTH
             </div>
             <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.32em] text-white/55">

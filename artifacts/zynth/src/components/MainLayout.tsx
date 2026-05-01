@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Nav } from "./Nav";
 import { Monolith } from "./Monolith";
 import { Marquee } from "./Marquee";
-import { Arsenal } from "./Arsenal";
-import { Manifesto } from "./Manifesto";
-import { Process } from "./Process";
-import { Portfolio } from "./Portfolio";
-import { Contact } from "./Contact";
-import { Footer } from "./Footer";
-import { PartnerModal } from "./PartnerModal";
 import { SocialDock } from "./SocialDock";
+import { PartnerModal } from "./PartnerModal";
 import { useLenis, scrollToSection } from "@/hooks/useLenis";
+
+const Arsenal = lazy(() => import("./Arsenal").then(m => ({ default: m.Arsenal })));
+const Manifesto = lazy(() => import("./Manifesto").then(m => ({ default: m.Manifesto })));
+const Process = lazy(() => import("./Process").then(m => ({ default: m.Process })));
+const Portfolio = lazy(() => import("./Portfolio").then(m => ({ default: m.Portfolio })));
+const Contact = lazy(() => import("./Contact").then(m => ({ default: m.Contact })));
+const Footer = lazy(() => import("./Footer").then(m => ({ default: m.Footer })));
+
+function SectionFallback() {
+  return <div className="w-full py-32 bg-black" />;
+}
 
 const greetings = [
   { text: "Hello",            lang: "English",          font: "'Archivo', sans-serif",                dir: "ltr" },
@@ -138,22 +143,22 @@ export function MainLayout() {
       <main>
         <Monolith />
         <Marquee />
-        <Arsenal />
-        <Manifesto />
-        <Process />
-        <Portfolio />
-        <Contact />
+        <Suspense fallback={<SectionFallback />}><Arsenal /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Manifesto /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Process /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Portfolio /></Suspense>
+        <Suspense fallback={<SectionFallback />}><Contact /></Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}><Footer /></Suspense>
       <SocialDock />
       <PartnerModal open={partnerOpen} onClose={() => setPartnerOpen(false)} />
       <Boot />
 
       {/* Hidden semantic content for SEO and screen readers */}
       <div className="sr-only" aria-hidden="false">
-        <h1>ZYNTH — Bespoke Digital Studio</h1>
+        <h1>ZYNTH — Bespoke Digital Studio · Islamabad, Pakistan</h1>
         <p>
-          ZYNTH is a bespoke digital studio in San Francisco engineering award-winning websites,
+          ZYNTH is a bespoke digital studio in Islamabad, Pakistan engineering award-winning websites,
           identity systems, and growth programs for ultra high-end clients. We build only six
           engagements per year. Every artifact is hand-engineered by senior partners.
         </p>
@@ -163,17 +168,8 @@ export function MainLayout() {
           <li>Graphic Design — wordmarks, kinetic identity, editorial, packaging.</li>
           <li>Digital Marketing — performance creative, lifecycle, SEO, attribution.</li>
         </ul>
-        <h2>Selected Clients</h2>
-        <ul>
-          <li>Maison Volterra — couture brand and editorial system.</li>
-          <li>Obsidian Capital — investment platform identity and portal.</li>
-          <li>Hokusai Distillery — single-malt rebrand and cellar tour.</li>
-          <li>Atelier Noir — Parisian art-collector gallery site.</li>
-          <li>Stratum Architects — practice site for a brutalist firm.</li>
-          <li>Helios Yachts — custom yacht configurator with WebGL hull rendering.</li>
-        </ul>
         <h2>Contact</h2>
-        <p>partners@zynth.studio · press@zynth.studio · By appointment only.</p>
+        <p>hello@zynthstudio.org · By appointment only · Islamabad, Pakistan</p>
       </div>
     </div>
   );

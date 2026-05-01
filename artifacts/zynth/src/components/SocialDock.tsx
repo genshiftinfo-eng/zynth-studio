@@ -9,12 +9,19 @@ const socials = [
   { icon: FaFacebook,  href: "https://www.facebook.com/profile.php?id=61571001161752", label: "Facebook"  },
 ];
 
-const angles = [-90, -45, 0, 45, 90];
-const RADIUS = 56;
+// Perfect semicircle: 5 icons spread from -90deg to +90deg (right-facing half circle)
+const RADIUS = 64;
+const ICON_SIZE = 34;
+const TOGGLE_W = 28;
+const TOGGLE_H = 52;
 
 export function SocialDock() {
   const [open, setOpen] = useState(false);
   const [spinning, setSpinning] = useState<number | null>(null);
+
+  // Origin = center of toggle button
+  const ox = TOGGLE_W / 2;
+  const oy = TOGGLE_H / 2;
 
   return (
     <>
@@ -23,22 +30,35 @@ export function SocialDock() {
           from { transform: rotate(0deg); }
           to   { transform: rotate(360deg); }
         }
-        @keyframes toggle-pulse {
-          0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.12); }
-          50%      { box-shadow: 0 0 0 5px rgba(255,255,255,0); }
+        @keyframes dock-pulse {
+          0%,100% { opacity: 0.6; }
+          50%      { opacity: 1; }
         }
       `}</style>
 
       <div
-        className="fixed left-0 z-[9000]"
-        style={{ top: "50%", transform: "translateY(-50%)" }}
+        style={{
+          position: "fixed",
+          left: 0,
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 9000,
+          width: TOGGLE_W + RADIUS + ICON_SIZE,
+          height: RADIUS * 2 + ICON_SIZE,
+          pointerEvents: "none",
+        }}
       >
-        {/* fan icons */}
+        {/* fan icons — each positioned relative to toggle center */}
         {socials.map((s, i) => {
-          const rad = (angles[i] * Math.PI) / 180;
-          const x = open ? Math.cos(rad) * RADIUS : 0;
-          const y = open ? Math.sin(rad) * RADIUS : 0;
+          const total = socials.length - 1;
+          const angle = -90 + (180 / total) * i; // -90 to +90 degrees
+          const rad = (angle * Math.PI) / 180;
+          const tx = open ? ox + Math.cos(rad) * RADIUS - ICON_SIZE / 2 : ox - ICON_SIZE / 2;
+          const ty = open
+            ? oy + Math.sin(rad) * RADIUS - ICON_SIZE / 2 + RADIUS
+            : oy - ICON_SIZE / 2 + RADIUS;
           const Icon = s.icon;
+
           return (
             <a
               key={s.label}
@@ -49,25 +69,22 @@ export function SocialDock() {
               onClick={() => { setSpinning(i); setTimeout(() => setSpinning(null), 650); }}
               style={{
                 position: "absolute",
-                left: 28,
-                top: 26,
-                width: 34,
-                height: 34,
+                left: tx,
+                top: ty,
+                width: ICON_SIZE,
+                height: ICON_SIZE,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: "#000",
-                border: "1px solid rgba(255,255,255,0.2)",
-                color: "rgba(255,255,255,0.7)",
-                transform: open
-                  ? `translate(${Math.cos(rad) * RADIUS}px, ${Math.sin(rad) * RADIUS}px) translate(-50%, -50%)`
-                  : `translate(-50%, -50%)`,
+                background: "rgba(0,0,0,0.9)",
+                border: "1px solid rgba(255,255,255,0.25)",
+                color: "rgba(255,255,255,0.75)",
                 opacity: open ? 1 : 0,
                 pointerEvents: open ? "auto" : "none",
-                transition: `transform 0.4s cubic-bezier(0.34,1.56,0.64,1) ${i * 45}ms, opacity 0.25s ease ${i * 45}ms`,
+                transition: `left 0.4s cubic-bezier(0.34,1.4,0.64,1) ${i * 40}ms, top 0.4s cubic-bezier(0.34,1.4,0.64,1) ${i * 40}ms, opacity 0.25s ease ${i * 40}ms`,
                 textDecoration: "none",
-                zIndex: 9001,
+                backdropFilter: "blur(8px)",
               }}
             >
               <Icon
@@ -75,6 +92,7 @@ export function SocialDock() {
                 style={{
                   animation: spinning === i ? "spin-cw 0.65s ease both" : "none",
                   display: "block",
+                  flexShrink: 0,
                 }}
               />
             </a>
@@ -83,34 +101,37 @@ export function SocialDock() {
 
         {/* toggle tab */}
         <button
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => setOpen(v => !v)}
           aria-label="Toggle social links"
           style={{
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 28,
-            height: 52,
-            background: "#000",
+            position: "absolute",
+            left: 0,
+            top: RADIUS,
+            width: TOGGLE_W,
+            height: TOGGLE_H,
+            background: "rgba(0,0,0,0.9)",
             border: "1px solid rgba(255,255,255,0.2)",
             borderLeft: "none",
             borderRadius: "0 999px 999px 0",
-            color: "rgba(255,255,255,0.6)",
-            cursor: "none",
-            animation: "toggle-pulse 3s ease infinite",
-            zIndex: 9002,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "rgba(255,255,255,0.7)",
+            cursor: "pointer",
+            pointerEvents: "auto",
+            backdropFilter: "blur(8px)",
+            animation: "dock-pulse 3s ease infinite",
           }}
         >
           <svg
-            width="9" height="9" viewBox="0 0 9 9"
+            width="8" height="10" viewBox="0 0 8 10"
             style={{
               transform: open ? "rotate(180deg)" : "rotate(0deg)",
               transition: "transform 0.3s ease",
             }}
           >
             <polyline
-              points="2,1.5 7,4.5 2,7.5"
+              points="1.5,1 6.5,5 1.5,9"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.5"
