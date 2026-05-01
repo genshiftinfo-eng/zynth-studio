@@ -14,44 +14,44 @@ import { NavDock } from "./components/NavDock";
 const queryClient = new QueryClient();
 
 const greetings = [
-  { text: "Hello",            font: "'Archivo', sans-serif",               dir: "ltr" },
-  { text: "Nǐ hǎo",          font: "'Noto Sans SC', sans-serif",           dir: "ltr" },
-  { text: "Namaste",          font: "'Noto Sans Devanagari', sans-serif",   dir: "ltr" },
-  { text: "Bonjour",          font: "'Archivo', sans-serif",               dir: "ltr" },
-  { text: "Hola",             font: "'Archivo', sans-serif",               dir: "ltr" },
-  { text: "السلام عليكم",    font: "'Noto Naskh Arabic', serif",           dir: "rtl" },
-  { text: "নমস্কার",         font: "'Noto Sans Bengali', sans-serif",      dir: "ltr" },
-  { text: "Olá",              font: "'Archivo', sans-serif",               dir: "ltr" },
-  { text: "Здравствуйте",    font: "'Noto Sans', sans-serif",              dir: "ltr" },
-  { text: "Halo",             font: "'Archivo', sans-serif",               dir: "ltr" },
-  { text: "こんにちは",       font: "'Noto Sans JP', sans-serif",           dir: "ltr" },
-  { text: "أهلاً",           font: "'Noto Naskh Arabic', serif",           dir: "rtl" },
+  { text: "Hello",          font: "'Archivo', sans-serif",             dir: "ltr" },
+  { text: "Nǐ hǎo",        font: "'Noto Sans SC', sans-serif",         dir: "ltr" },
+  { text: "Namaste",        font: "'Noto Sans Devanagari', sans-serif", dir: "ltr" },
+  { text: "Bonjour",        font: "'Archivo', sans-serif",             dir: "ltr" },
+  { text: "Hola",           font: "'Archivo', sans-serif",             dir: "ltr" },
+  { text: "السلام عليكم",  font: "'Noto Naskh Arabic', serif",         dir: "rtl" },
+  { text: "নমস্কার",       font: "'Noto Sans Bengali', sans-serif",    dir: "ltr" },
+  { text: "Olá",            font: "'Archivo', sans-serif",             dir: "ltr" },
+  { text: "Здравствуйте",  font: "'Noto Sans', sans-serif",            dir: "ltr" },
+  { text: "Halo",           font: "'Archivo', sans-serif",             dir: "ltr" },
+  { text: "こんにちは",     font: "'Noto Sans JP', sans-serif",         dir: "ltr" },
+  { text: "أهلاً",         font: "'Noto Naskh Arabic', serif",         dir: "rtl" },
 ];
 
 function Boot({ onDone }: { onDone: () => void }) {
   const [phase, setPhase] = useState<"greet" | "boot" | "done">("greet");
-  const [greetIdx, setGreetIdx] = useState(0);
+  const [idx, setIdx] = useState(0);
   const [visible, setVisible] = useState(true);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (phase !== "greet") return;
-    if (greetIdx >= greetings.length) { setPhase("boot"); return; }
+    if (idx >= greetings.length) { setPhase("boot"); return; }
     setVisible(true);
-    const t1 = setTimeout(() => setVisible(false), 280);
-    const t2 = setTimeout(() => setGreetIdx(i => i + 1), 400);
+    const t1 = setTimeout(() => setVisible(false), 300);
+    const t2 = setTimeout(() => setIdx(i => i + 1), 450);
     return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [phase, greetIdx]);
+  }, [phase, idx]);
 
   useEffect(() => {
     if (phase !== "boot") return;
     let v = 0;
     const id = setInterval(() => {
-      v = Math.min(100, v + Math.random() * 18 + 14);
+      v = Math.min(100, v + Math.random() * 20 + 12);
       setProgress(Math.floor(v));
       if (v >= 100) {
         clearInterval(id);
-        setTimeout(() => { setPhase("done"); onDone(); }, 320);
+        setTimeout(() => { setPhase("done"); onDone(); }, 400);
       }
     }, 80);
     return () => clearInterval(id);
@@ -59,42 +59,48 @@ function Boot({ onDone }: { onDone: () => void }) {
 
   if (phase === "done") return null;
 
-  const g = greetings[greetIdx] ?? greetings[greetings.length - 1];
+  const g = greetings[idx] ?? greetings[greetings.length - 1];
 
   return (
-    <div
-      style={{ position: "fixed", inset: 0, zIndex: 99999, background: "#000", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}
-    >
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 99999,
+      background: "#000", color: "#fff",
+      display: "flex", alignItems: "center", justifyContent: "center",
+    }}>
+      <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
+
       {phase === "greet" && (
-        <div
-          key={greetIdx}
-          style={{
-            fontFamily: g.font,
-            direction: g.dir as "ltr" | "rtl",
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(-14px)",
-            transition: "opacity 0.12s ease, transform 0.12s ease",
-            textAlign: "center",
-            width: "100%",
-            padding: "0 24px",
-          }}
-        >
-          <div style={{ fontSize: "clamp(40px, 10vw, 88px)", fontWeight: 700, lineHeight: 1 }}>
+        <div key={idx} style={{
+          fontFamily: g.font,
+          direction: g.dir as "ltr" | "rtl",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0)" : "translateY(-12px)",
+          transition: "opacity 0.15s ease, transform 0.15s ease",
+          textAlign: "center",
+          width: "100%",
+          padding: "0 32px",
+        }}>
+          <span style={{ fontSize: "clamp(36px, 10vw, 88px)", fontWeight: 700, lineHeight: 1 }}>
             {g.text}
-          </div>
+          </span>
         </div>
       )}
 
       {phase === "boot" && (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
-          <div style={{ fontSize: "clamp(72px, 15vw, 180px)", fontWeight: 900, letterSpacing: "-0.05em", lineHeight: 1, animation: "fadeIn .3s ease both", fontFamily: "'Archivo', sans-serif" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", animation: "fadeIn .3s ease both" }}>
+          <div style={{
+            fontSize: "clamp(64px, 14vw, 180px)",
+            fontWeight: 900,
+            letterSpacing: "-0.05em",
+            lineHeight: 1,
+            fontFamily: "'Archivo', sans-serif",
+          }}>
             ZYNTH
           </div>
-          <div style={{ marginTop: 24, width: "min(420px, 80vw)", height: 1, background: "rgba(255,255,255,0.15)", animation: "fadeIn .3s ease both" }}>
+          <div style={{ marginTop: 24, width: "min(420px, 80vw)", height: 1, background: "rgba(255,255,255,0.15)" }}>
             <div style={{ height: 1, background: "#fff", width: `${progress}%`, transition: "width .25s linear" }} />
           </div>
-          <div style={{ marginTop: 12, fontFamily: "monospace", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", animation: "fadeIn .3s ease both" }}>
+          <div style={{ marginTop: 12, fontFamily: "monospace", fontSize: 10, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>
             Compiling shaders · {String(progress).padStart(3, "0")}%
           </div>
         </div>
@@ -105,15 +111,18 @@ function Boot({ onDone }: { onDone: () => void }) {
 
 function Router() {
   const [location] = useLocation();
+  const prevLocation = useRef(location);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prevLocation.current === location) return;
+    prevLocation.current = location;
     window.scrollTo(0, 0);
     const el = contentRef.current;
     if (el) {
-      el.classList.remove("page-enter");
+      el.style.animation = "none";
       void el.offsetWidth;
-      el.classList.add("page-enter");
+      el.style.animation = "pageEnter 0.4s cubic-bezier(0.16,1,0.3,1) both";
     }
   }, [location]);
 
@@ -125,7 +134,8 @@ function Router() {
       >
         Skip to content
       </a>
-      <div ref={contentRef} className="page-enter">
+      <style>{`@keyframes pageEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}`}</style>
+      <div ref={contentRef}>
         <Switch>
           <Route path="/" component={MainLayout} />
           <Route path="/privacy-policy" component={PrivacyPolicy} />
