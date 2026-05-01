@@ -46,8 +46,8 @@ function Boot() {
       return;
     }
     setVisible(true);
-    const showTimer = window.setTimeout(() => setVisible(false), 520);
-    const nextTimer = window.setTimeout(() => setGreetIdx((i) => i + 1), 720);
+    const showTimer = window.setTimeout(() => setVisible(false), 280);
+    const nextTimer = window.setTimeout(() => setGreetIdx((i) => i + 1), 400);
     return () => { window.clearTimeout(showTimer); window.clearTimeout(nextTimer); };
   }, [phase, greetIdx]);
 
@@ -74,26 +74,25 @@ function Boot() {
   const g = greetings[greetIdx] ?? greetings[greetings.length - 1];
 
   return (
-    <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center bg-black text-white" data-testid="boot-screen">
+    <div className="fixed inset-0 z-[300] bg-black text-white" style={{ display: "flex", alignItems: "center", justifyContent: "center" }} data-testid="boot-screen">
       {phase === "greet" && (
-        <>
           <div
             key={greetIdx}
             style={{
               fontFamily: g.font,
               direction: g.dir as "ltr" | "rtl",
               opacity: visible ? 1 : 0,
-              transform: visible ? "translateY(0)" : "translateY(-18px)",
-              transition: "opacity 0.18s ease, transform 0.18s ease",
+              transform: visible ? "translateY(0)" : "translateY(-14px)",
+              transition: "opacity 0.12s ease, transform 0.12s ease",
+              textAlign: "center",
+              width: "100%",
+              padding: "0 24px",
             }}
-            className="text-center px-6"
           >
-            <div className="text-[42px] sm:text-[64px] md:text-[88px] font-bold leading-tight text-white">
+            <div className="text-[40px] sm:text-[64px] md:text-[88px] font-bold leading-none text-white">
               {g.text}
             </div>
-
           </div>
-        </>
       )}
 
       {phase === "boot" && (
