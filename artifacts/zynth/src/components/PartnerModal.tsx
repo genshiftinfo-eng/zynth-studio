@@ -146,6 +146,8 @@ export function PartnerModal({ open, onClose }: { open: boolean; onClose: () => 
       <div
         className="relative z-10 w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-0 sm:mx-4 h-full sm:h-auto sm:max-h-[92svh] overflow-y-auto border-0 sm:border border-white/15 bg-black"
         style={{ animation: "partner-up .4s ease both", overscrollBehavior: "contain" }}
+        onWheel={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
       >
         {/* top bar */}
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-8 sm:py-5 bg-black">
