@@ -35,7 +35,8 @@ function Boot() {
   const alreadyBooted = () => {
     if (typeof window === "undefined") return false;
     if (window.location.hash) return true;
-    return window.sessionStorage.getItem("zynth_booted") === "1";
+    // Only skip if navigating within same session via hash change, not on fresh load
+    return false;
   };
 
   const [phase, setPhase] = useState<"greet" | "boot" | "done">(alreadyBooted() ? "done" : "greet");
@@ -66,7 +67,6 @@ function Boot() {
       if (v >= 100) {
         window.clearInterval(id);
         window.setTimeout(() => {
-          window.sessionStorage.setItem("zynth_booted", "1");
           setPhase("done");
         }, 320);
       }

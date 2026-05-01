@@ -1,15 +1,16 @@
+import { FaHome, FaCode, FaBook, FaCog, FaStar, FaEnvelope, FaShieldAlt, FaFileContract } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 
 const navItems = [
-  { label: "Index",        href: "/#monolith",           icon: "◆" },
-  { label: "Arsenal",      href: "/#arsenal",            icon: "I" },
-  { label: "Doctrine",     href: "/#manifesto",          icon: "II" },
-  { label: "Method",       href: "/#process",            icon: "III" },
-  { label: "Capabilities", href: "/#proof",              icon: "IV" },
-  { label: "Contact",      href: "/#contact",            icon: "V" },
-  { label: "Privacy",      href: "/privacy-policy",      icon: "§" },
-  { label: "Terms",        href: "/terms-and-conditions", icon: "¶" },
+  { label: "Home",         href: "/#monolith",            Icon: FaHome },
+  { label: "Services",     href: "/#arsenal",             Icon: FaCode },
+  { label: "Doctrine",     href: "/#manifesto",           Icon: FaBook },
+  { label: "Method",       href: "/#process",             Icon: FaCog },
+  { label: "Capabilities", href: "/#proof",               Icon: FaStar },
+  { label: "Contact",      href: "/#contact",             Icon: FaEnvelope },
+  { label: "Privacy",      href: "/privacy-policy",       Icon: FaShieldAlt },
+  { label: "Terms",        href: "/terms-and-conditions", Icon: FaFileContract },
 ];
 
 const RADIUS = 80;
@@ -34,8 +35,6 @@ export function NavDock() {
   if (modalOpen) return null;
 
   const total = navItems.length - 1;
-  const ox = TOGGLE_W / 2;
-  const oy = TOGGLE_H / 2;
 
   function handleNav(href: string, i: number) {
     setActive(i);
@@ -97,6 +96,7 @@ export function NavDock() {
               key={item.label}
               aria-label={item.label}
               onClick={() => handleNav(item.href, i)}
+              title={item.label}
               style={{
                 position: "absolute",
                 left: tx,
@@ -115,21 +115,16 @@ export function NavDock() {
                 transition: `left 0.4s cubic-bezier(0.34,1.4,0.64,1) ${i * 35}ms, top 0.4s cubic-bezier(0.34,1.4,0.64,1) ${i * 35}ms, opacity 0.25s ease ${i * 35}ms`,
                 backdropFilter: "blur(8px)",
                 cursor: "pointer",
-                fontSize: "9px",
-                fontFamily: "var(--app-font-mono)",
-                letterSpacing: "0.05em",
               }}
-              title={item.label}
             >
-              <span
+              <item.Icon
+                size={13}
                 style={{
                   animation: active === i ? "nav-spin 0.5s ease both" : "none",
                   display: "block",
-                  fontSize: item.icon.length > 1 ? "7px" : "10px",
+                  flexShrink: 0,
                 }}
-              >
-                {item.icon}
-              </span>
+              />
             </button>
           );
         })}
