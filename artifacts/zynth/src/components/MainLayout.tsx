@@ -9,6 +9,7 @@ import { Portfolio } from "./Portfolio";
 import { Contact } from "./Contact";
 import { Footer } from "./Footer";
 import { PartnerModal } from "./PartnerModal";
+import { SocialDock } from "./SocialDock";
 import { useLenis, scrollToSection } from "@/hooks/useLenis";
 
 const greetings = [
@@ -144,6 +145,7 @@ export function MainLayout() {
         <Contact />
       </main>
       <Footer />
+      <SocialDock />
       <PartnerModal open={partnerOpen} onClose={() => setPartnerOpen(false)} />
       <Boot />
 
