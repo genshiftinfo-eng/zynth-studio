@@ -2,109 +2,113 @@ import { useState } from "react";
 import { FaInstagram, FaYoutube, FaTiktok, FaXTwitter, FaFacebook } from "react-icons/fa6";
 
 const socials = [
-  { icon: FaInstagram, href: "https://www.instagram.com/zynthvisuals/",                  label: "Instagram" },
-  { icon: FaYoutube,   href: "https://www.youtube.com/@zynthvisuals",                    label: "YouTube"   },
-  { icon: FaTiktok,    href: "https://www.tiktok.com/@zynthvisuals",                     label: "TikTok"    },
-  { icon: FaXTwitter,  href: "https://x.com/zynthvisuals",                               label: "X"         },
-  { icon: FaFacebook,  href: "https://www.facebook.com/profile.php?id=61571001161752",   label: "Facebook"  },
+  { icon: FaInstagram, href: "https://www.instagram.com/zynthvisuals/",                label: "Instagram" },
+  { icon: FaYoutube,   href: "https://www.youtube.com/@zynthvisuals",                  label: "YouTube"   },
+  { icon: FaTiktok,    href: "https://www.tiktok.com/@zynthvisuals",                   label: "TikTok"    },
+  { icon: FaXTwitter,  href: "https://x.com/zynthvisuals",                             label: "X"         },
+  { icon: FaFacebook,  href: "https://www.facebook.com/profile.php?id=61571001161752", label: "Facebook"  },
 ];
+
+const angles = [-90, -45, 0, 45, 90];
+const RADIUS = 68;
 
 export function SocialDock() {
   const [open, setOpen] = useState(false);
   const [spinning, setSpinning] = useState<number | null>(null);
 
-  function handleClick(idx: number, href: string) {
-    setSpinning(idx);
-    window.open(href, "_blank", "noopener,noreferrer");
-    setTimeout(() => setSpinning(null), 600);
-  }
-
-  // Each icon fans out in a semicircle on the right side of the toggle button
-  // angles: spread from -90deg (top) to +90deg (bottom) = left-side half circle
-  const angles = [-90, -45, 0, 45, 90];
-
   return (
     <>
       <style>{`
         @keyframes spin-cw {
-          0%   { transform: rotate(0deg) scale(1.1); }
-          100% { transform: rotate(360deg) scale(1); }
-        }
-        @keyframes dock-in {
-          from { opacity: 0; transform: scale(0.5); }
-          to   { opacity: 1; transform: scale(1); }
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
         }
         @keyframes toggle-pulse {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.15); }
-          50%       { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+          0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.12); }
+          50%      { box-shadow: 0 0 0 5px rgba(255,255,255,0); }
         }
       `}</style>
 
-      {/* fixed container — left center */}
       <div
-        className="fixed left-0 top-1/2 z-[9000]"
-        style={{ transform: "translateY(-50%)" }}
+        className="fixed left-0 z-[9000]"
+        style={{ top: "50%", transform: "translateY(-50%)" }}
       >
         {/* fan icons */}
         {socials.map((s, i) => {
-          const angle = angles[i];
-          const rad = (angle * Math.PI) / 180;
-          const radius = 72;
-          // fan to the RIGHT of the toggle (positive x)
-          const x = open ? Math.cos(rad) * radius : 0;
-          const y = open ? Math.sin(rad) * radius : 0;
+          const rad = (angles[i] * Math.PI) / 180;
+          const x = open ? Math.cos(rad) * RADIUS : 0;
+          const y = open ? Math.sin(rad) * RADIUS : 0;
           const Icon = s.icon;
-
           return (
-            <button
+            <a
               key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={s.label}
-              onClick={() => handleClick(i, s.href)}
+              onClick={() => { setSpinning(i); setTimeout(() => setSpinning(null), 650); }}
               style={{
                 position: "absolute",
                 left: 0,
                 top: 0,
-                transform: `translate(${x}px, ${y}px)`,
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#000",
+                border: "1px solid rgba(255,255,255,0.2)",
+                color: "rgba(255,255,255,0.7)",
+                transform: `translate(${x}px, calc(-50% + ${y}px))`,
                 opacity: open ? 1 : 0,
                 pointerEvents: open ? "auto" : "none",
-                transition: `transform 0.4s cubic-bezier(0.34,1.56,0.64,1) ${i * 40}ms, opacity 0.3s ease ${i * 40}ms`,
-                animation: open ? `dock-in 0.35s ease ${i * 40}ms both` : "none",
+                transition: `transform 0.4s cubic-bezier(0.34,1.56,0.64,1) ${i * 45}ms, opacity 0.25s ease ${i * 45}ms`,
+                textDecoration: "none",
+                zIndex: 9001,
               }}
-              className="flex items-center justify-center w-9 h-9 rounded-full bg-black border border-white/20 text-white/70 hover:text-white hover:border-white/60 hover:bg-white/10 transition-colors"
             >
               <Icon
-                size={15}
+                size={14}
                 style={{
-                  animation: spinning === i ? "spin-cw 0.6s ease both" : "none",
+                  animation: spinning === i ? "spin-cw 0.65s ease both" : "none",
+                  display: "block",
                 }}
               />
-            </button>
+            </a>
           );
         })}
 
-        {/* toggle button — the half circle tab */}
+        {/* toggle tab */}
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle social links"
-          className="relative flex items-center justify-center w-8 h-14 bg-black border border-white/20 text-white/60 hover:text-white hover:border-white/50 transition-all"
           style={{
-            borderRadius: "0 999px 999px 0",
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 28,
+            height: 52,
+            background: "#000",
+            border: "1px solid rgba(255,255,255,0.2)",
             borderLeft: "none",
+            borderRadius: "0 999px 999px 0",
+            color: "rgba(255,255,255,0.6)",
+            cursor: "none",
             animation: "toggle-pulse 3s ease infinite",
+            zIndex: 9002,
           }}
         >
-          {/* animated chevron */}
           <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
+            width="9" height="9" viewBox="0 0 9 9"
             style={{
               transform: open ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.35s ease",
+              transition: "transform 0.3s ease",
             }}
           >
             <polyline
-              points="2,2 8,5 2,8"
+              points="2,1.5 7,4.5 2,7.5"
               fill="none"
               stroke="currentColor"
               strokeWidth="1.5"
