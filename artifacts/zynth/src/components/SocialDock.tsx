@@ -15,10 +15,8 @@ export function SocialDock() {
 
   function handleClick(idx: number, href: string) {
     setSpinning(idx);
-    setTimeout(() => {
-      setSpinning(null);
-      window.open(href, "_blank", "noopener,noreferrer");
-    }, 600);
+    window.open(href, "_blank", "noopener,noreferrer");
+    setTimeout(() => setSpinning(null), 600);
   }
 
   // Each icon fans out in a semicircle on the right side of the toggle button
