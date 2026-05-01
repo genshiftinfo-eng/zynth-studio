@@ -79,7 +79,7 @@ function Boot() {
   const g = greetings[greetIdx] ?? greetings[greetings.length - 1];
 
   return (
-    <div className="fixed inset-0 z-[300] bg-black text-white" style={{ display: "flex", alignItems: "center", justifyContent: "center" }} data-testid="boot-screen">
+    <div className="fixed inset-0 z-[99999] bg-black text-white" style={{ display: "flex", alignItems: "center", justifyContent: "center" }} data-testid="boot-screen">
       {phase === "greet" && (
           <div
             key={greetIdx}
