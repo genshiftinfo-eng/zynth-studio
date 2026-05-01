@@ -10,7 +10,7 @@ const socials = [
 ];
 
 const angles = [-90, -45, 0, 45, 90];
-const RADIUS = 68;
+const RADIUS = 56;
 
 export function SocialDock() {
   const [open, setOpen] = useState(false);
@@ -49,10 +49,10 @@ export function SocialDock() {
               onClick={() => { setSpinning(i); setTimeout(() => setSpinning(null), 650); }}
               style={{
                 position: "absolute",
-                left: 0,
-                top: 0,
-                width: 36,
-                height: 36,
+                left: 28,
+                top: 26,
+                width: 34,
+                height: 34,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
@@ -60,7 +60,9 @@ export function SocialDock() {
                 background: "#000",
                 border: "1px solid rgba(255,255,255,0.2)",
                 color: "rgba(255,255,255,0.7)",
-                transform: `translate(${x}px, calc(-50% + ${y}px))`,
+                transform: open
+                  ? `translate(${Math.cos(rad) * RADIUS}px, ${Math.sin(rad) * RADIUS}px) translate(-50%, -50%)`
+                  : `translate(-50%, -50%)`,
                 opacity: open ? 1 : 0,
                 pointerEvents: open ? "auto" : "none",
                 transition: `transform 0.4s cubic-bezier(0.34,1.56,0.64,1) ${i * 45}ms, opacity 0.25s ease ${i * 45}ms`,
