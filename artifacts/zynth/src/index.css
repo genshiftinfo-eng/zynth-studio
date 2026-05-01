@@ -221,7 +221,13 @@ html { scrollbar-width: none; }
   to { transform: translateX(-50%); }
 }
 .marquee-track {
-  animation: marquee 28s linear infinite;
+  animation: marquee 18s linear infinite;
+}
+@media (min-width: 1280px) {
+  .marquee-track { animation-duration: 14s; }
+}
+@media (min-width: 1920px) {
+  .marquee-track { animation-duration: 10s; }
 }
 
 /* Grain overlay — kept very lightweight: a small static tiled noise PNG-like

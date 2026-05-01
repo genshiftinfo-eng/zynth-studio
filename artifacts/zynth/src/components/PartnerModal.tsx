@@ -132,7 +132,7 @@ export function PartnerModal({ open, onClose }: { open: boolean; onClose: () => 
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[9500] flex items-start sm:items-center justify-center" style={{ cursor: "none" }}>
+    <div className="fixed inset-0 z-[9500] flex items-start sm:items-center justify-center">
       <style>{`
         @keyframes partner-fade { from { opacity: 0; } to { opacity: 1; } }
         @keyframes partner-up { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }

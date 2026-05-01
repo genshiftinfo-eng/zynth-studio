@@ -28,6 +28,12 @@ function Router() {
 
   return (
     <div id="page-root" className="page-enter">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:font-mono focus:text-[11px] focus:uppercase focus:tracking-[0.28em]"
+      >
+        Skip to content
+      </a>
       <Switch>
         <Route path="/" component={MainLayout} />
         <Route path="/privacy-policy" component={PrivacyPolicy} />

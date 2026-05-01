@@ -139,7 +139,7 @@ export function MainLayout() {
   return (
     <div className="relative bg-black text-white grain min-h-screen" data-testid="main-layout">
       <Nav onPartnerOpen={() => setPartnerOpen(true)} />
-      <main>
+      <main id="main-content">
         <Monolith />
         <Marquee />
         <Suspense fallback={<SectionFallback />}><Arsenal /></Suspense>
