@@ -146,7 +146,8 @@ function LiquidLogo() {
   // Responsive scale
   const scale = useMemo(() => {
     const w = viewport.width;
-    if (w < 6) return 0.55;
+    if (w < 4) return 0.38;
+    if (w < 6) return 0.52;
     if (w < 9) return 0.78;
     return 1.0;
   }, [viewport.width]);
@@ -213,7 +214,7 @@ function LiquidLogo() {
 function FloatingShards() {
   const ref = useRef<THREE.InstancedMesh | null>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
-  const count = 36;
+  const count = 18;
   const seeds = useMemo(
     () =>
       Array.from({ length: count }, () => ({
@@ -262,23 +263,22 @@ export function Monolith() {
     >
       {/* HUD frame */}
       <div className="pointer-events-none absolute inset-0 z-20">
-        <div className="absolute left-6 top-24 md:left-10 md:top-28 font-mono text-[10px] tracking-[0.32em] uppercase text-white/55">
+        <div className="absolute left-6 top-24 md:left-10 md:top-28 font-mono text-[10px] tracking-[0.32em] uppercase text-white/55 hidden sm:block">
           <div>N° 001 / Monolith</div>
           <div className="mt-1 text-white/35">Lat 33.6844 · Lon 73.0479</div>
         </div>
-        <div className="absolute right-6 top-24 md:right-10 md:top-28 text-right font-mono text-[10px] tracking-[0.32em] uppercase text-white/55">
+        <div className="absolute right-6 top-24 md:right-10 md:top-28 text-right font-mono text-[10px] tracking-[0.32em] uppercase text-white/55 hidden sm:block">
           <div>Bespoke · Avant-garde</div>
           <div className="mt-1 text-white/35">Awwwards · FWA · CSSDA</div>
         </div>
         <div className="absolute bottom-10 left-6 md:left-10 right-6 md:right-10 flex items-end justify-between">
           <div className="max-w-md">
-            <div className="font-mono text-[10px] tracking-[0.32em] uppercase text-white/55">
+            <div className="font-mono text-[10px] tracking-[0.32em] uppercase text-white/55 hidden sm:block">
               ◆ A studio for the uncompromising
             </div>
-            <h2 className="mt-3 font-display text-[14px] md:text-[18px] leading-[1.25] text-white/85 max-w-[44ch]">
+            <h2 className="mt-3 font-display text-[12px] sm:text-[14px] md:text-[18px] leading-[1.25] text-white/85 max-w-[44ch]">
               We build digital monoliths — websites, brand systems, and growth engines
               forged from raw geometry and obsessive engineering.
-              Crafting high-performance digital experiences through obsessive engineering and avant-garde design.
             </h2>
           </div>
           <button
@@ -298,10 +298,10 @@ export function Monolith() {
       {/* The 3D canvas */}
       <CanvasFallback fallback={<StaticHeroFallback />}>
         <Canvas
-          dpr={[1, 1.4]}
+          dpr={[1, 1]}
           frameloop={inView ? "always" : "never"}
           camera={{ position: [0, 0, 7.5], fov: 38 }}
-          gl={{ antialias: true, alpha: false, failIfMajorPerformanceCaveat: false, powerPreference: "high-performance" }}
+          gl={{ antialias: false, alpha: false, failIfMajorPerformanceCaveat: false, powerPreference: "high-performance" }}
           style={{ background: "#000" }}
           onCreated={({ gl }) => {
             gl.setClearColor("#000000", 1);

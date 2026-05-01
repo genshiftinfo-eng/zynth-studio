@@ -28,11 +28,11 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">Channels</div>
             <ul className="mt-3 space-y-1 text-white/85">
-              {["Awwwards", "FWA", "Are.na", "Instagram"].map((l) => (
-                <li key={l}>
-                  <a href="#" className="ink-stroke text-[14px]">{l}</a>
-                </li>
-              ))}
+              <li><a href="https://www.instagram.com/zynthvisuals/" target="_blank" rel="noopener noreferrer" className="ink-stroke text-[14px]">Instagram</a></li>
+              <li><a href="https://www.youtube.com/@zynthvisuals" target="_blank" rel="noopener noreferrer" className="ink-stroke text-[14px]">YouTube</a></li>
+              <li><a href="https://www.tiktok.com/@zynthvisuals" target="_blank" rel="noopener noreferrer" className="ink-stroke text-[14px]">TikTok</a></li>
+              <li><a href="https://x.com/zynthvisuals" target="_blank" rel="noopener noreferrer" className="ink-stroke text-[14px]">X</a></li>
+              <li><a href="https://www.facebook.com/profile.php?id=61571001161752" target="_blank" rel="noopener noreferrer" className="ink-stroke text-[14px]">Facebook</a></li>
             </ul>
           </div>
           <div className="md:col-span-2">
